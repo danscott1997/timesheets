@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.timesheet-day-disabled {
+    @apply text-gray-600 cursor-default;
+}
+
+.timesheet-day {
+    width: 100px;
+    height: 100px;
+}
+
+.today {
+    @apply text-red-500;
+}
