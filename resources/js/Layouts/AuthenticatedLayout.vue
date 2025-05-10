@@ -22,7 +22,7 @@ const showingNavigationDropdown = ref(false);
                         <div class="flex">
                             <!-- Logo -->
                             <div class="flex shrink-0 items-center">
-                                <Link :href="route('timesheet')">
+                                <Link :href="route('timesheet.index')">
                                     <ApplicationLogo
                                         class="block h-9 w-auto text-gray-800 dark:text-gray-200"
                                     />
@@ -34,24 +34,17 @@ const showingNavigationDropdown = ref(false);
                                 class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
                             >
                                 <NavLink
-                                    :href="route('timesheet')"
-                                    :active="route().current('timesheet')"
+                                    :href="route('timesheet.index')"
+                                    :active="route().current('timesheet.index')"
                                 >
                                     Timesheet
                                 </NavLink>
 
                                 <NavLink
-                                    :href="route('upload-csv')"
-                                    :active="route().current('upload-csv')"
+                                    :href="route('staff.create')"
+                                    :active="route().current('staff.create')"
                                 >
-                                  Upload Data
-                                </NavLink>
-
-                                <NavLink
-                                    :href="route('manage-staff')"
-                                    :active="route().current('manage-staff')"
-                                >
-                                  Manage Staff
+                                  Add Staff
                                 </NavLink>
 
                             </div>

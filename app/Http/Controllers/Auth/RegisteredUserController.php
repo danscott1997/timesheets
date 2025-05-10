@@ -46,6 +46,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('timesheet', absolute: false));
+        return redirect(route('timesheet.index', absolute: false));
     }
 }

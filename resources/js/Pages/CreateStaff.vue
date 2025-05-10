@@ -4,12 +4,12 @@ import { Head } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <Head title="Manage Staff" />
+    <Head title="Create Staff" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                Manage Staff
+                Add Staff
             </h2>
         </template>
 
@@ -17,7 +17,11 @@ import { Head } from '@inertiajs/vue3';
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
+                        <h2 class="font-bold">Add new staff member</h2>
 
+                        <form method="POST" >
+
+                        </form>
                     </div>
                 </div>
             </div>
