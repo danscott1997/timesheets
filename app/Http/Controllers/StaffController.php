@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateStaffRequest;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -28,6 +29,7 @@ class StaffController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
 //        $staff = Staff::firstOrCreate([
 //            'first_name' => 'Dan',
 //            'last_name' => 'Scott',

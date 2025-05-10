@@ -15,6 +15,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::prefix('staff')->name('staff.')->group(function () {
         Route::get('/create', [StaffController::class, 'create'])->name('create');
+        Route::post('/create', [StaffController::class, 'store'])->name('store');
     });
 
     Route::prefix('timesheet')->name('timesheet.')->group(function () {
