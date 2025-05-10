@@ -13,7 +13,7 @@ class CreateStaffRequest extends FormRequest
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
-            'phone' => ['nullable', 'numeric', 'phone', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:255'],
         ];
     }
 }

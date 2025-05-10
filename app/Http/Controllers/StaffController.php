@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateStaffRequest;
+use App\Models\Staff;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class StaffController extends Controller
@@ -27,16 +29,22 @@ class StaffController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateStaffRequest $request)
     {
-        dd($request->all());
-//        $staff = Staff::firstOrCreate([
-//            'first_name' => 'Dan',
-//            'last_name' => 'Scott',
-//            'email' => 'dan@test.com'
-//        ], ['email']);
-//
-//        dd($staff);
+        $data = $request->validated();
+
+        if (Staff::firstWhere('email', $data['email'])) {
+            return to_route('staff.create')->withErrors(['Staff member with that email already exists!']);
+        }
+
+        try {
+            Staff::create($data);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return to_route('staff.create')->withErrors(['Failed creating staff member']);
+        }
+
+        return to_route('staff.create')->with('success', 'Staff member created successfully.');
     }
 
     /**

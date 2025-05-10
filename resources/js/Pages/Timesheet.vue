@@ -4,8 +4,13 @@ import {Head} from '@inertiajs/vue3';
 
 defineProps({
     timesheet: Object,
-    year: [String, Number]
-})
+    years: Array,
+    months: Array,
+    staff: Object,
+    selectedStaff: String,
+    selectedMonth: String,
+    selectedYear: String,
+});
 
 function chunkByWeek(data) {
     const chunks = []
@@ -37,22 +42,28 @@ function chunkByWeek(data) {
                     <form method="GET" :action="route('timesheet.index')" class="flex gap-6">
                         <div class="flex flex-col">
                             <label for="user">Staff</label>
-                            <select name="user" class="bg-transparent w-24 my-2">
-                                <option>John</option>
+                            <select name="user" class="bg-transparent w-44 my-2">
+                                <template v-for="staffMember in staff">
+                                    <option :value="staffMember.id" :selected="selectedStaff == staffMember.id" v-text="staffMember.full_name"></option>
+                                </template>
                             </select>
                         </div>
 
                         <div class="flex flex-col">
                             <label for="month">Month</label>
                             <select name="month" class="bg-transparent w-24 my-2">
-                                <option>May</option>
+                                <template v-for="month in months">
+                                    <option :value="month" :selected="selectedMonth == month" v-text="month"></option>
+                                </template>
                             </select>
                         </div>
 
                         <div class="flex flex-col">
                             <label for="year">Year</label>
                             <select name="year" class="bg-transparent w-24 my-2">
-                                <option>2025</option>
+                                <template v-for="year in years">
+                                    <option :value="year" :selected="selectedYear == year" v-text="year"></option>
+                                </template>
                             </select>
                         </div>
 
@@ -66,7 +77,7 @@ function chunkByWeek(data) {
 
                     <div class="flex flex-col ml-auto">
                         <label for="file_input">Upload CSV</label>
-                        <input id="file_input"
+                        <input disabled id="file_input"
                                type="file"
                                class="block w-full my-2 text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
                     </div>
@@ -75,7 +86,7 @@ function chunkByWeek(data) {
 
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
                     <div v-for="(data, month) in timesheet" :key="month">
-                        <h2 class="text-xl p-8 font-extrabold">{{ month }} {{ year }}</h2>
+                        <h2 class="text-xl p-8 font-extrabold">{{ selectedMonth }} {{ selectedYear }}</h2>
                         <div>
                             <table class="timesheet w-full bg-grey-700 mb-4">
                                 <thead>
@@ -98,6 +109,7 @@ function chunkByWeek(data) {
                                         class="timesheet-day"
                                         :class="item.custom_classes"
                                     >
+                                        <a :href="route('time-entries.create', {staff: selectedStaff, date: item.date})">
                                         <div class="flex flex-col">
                                             <p>{{ item.day }}</p>
 
@@ -106,7 +118,7 @@ function chunkByWeek(data) {
                                                 <p v-show="item.disabled || item.weekend">-</p>
                                             </div>
                                         </div>
-
+                                        </a>
                                     </td>
                                 </tr>
                                 </tbody>

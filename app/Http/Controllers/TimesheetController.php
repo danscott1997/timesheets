@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Staff;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class TimesheetController extends Controller
@@ -10,11 +12,21 @@ class TimesheetController extends Controller
     private Carbon $date;
     
     
-    public function index()
+    public function index(Request $request)
     {
+        $month = request('month') ?? now()->monthName;
+        $year = request('year') ?? now()->year;
+
+        $date = Carbon::createFromFormat('F Y', "$month $year")->startOfMonth();
+
         return Inertia::render('Timesheet', [
-            'timesheet' => $this->loadTimesheet(now()->year, now()->month),
-            'year' => now()->year
+            'timesheet' => $this->loadTimesheet($date->year, $date->month),
+            'years' => $this->getYears(),
+            'months' => $this->getMonths(),
+            'staff' => Staff::all()->toArray(),
+            'selectedStaff' => request('user'),
+            'selectedMonth' => $month,
+            'selectedYear' => $year,
         ]);
     }
 
@@ -80,11 +92,36 @@ class TimesheetController extends Controller
             $classes[] = 'timesheet-day-disabled';
         }
 
+        // TODO - check existing time entry
+
         return [
             'custom_classes' => implode(' ', $classes),
             'day' => $this->date->day,
+            'date' => $this->date->format('Y-m-d'),
             'disabled' => $disabled,
             'weekend' => $this->date->isWeekend(),
         ];
+    }
+
+    private function getMonths(): array
+    {
+        $months = [];
+
+        for ($x = 0; $x < 3; $x++) {
+            $months[] = now()->subMonths($x)->monthName;
+        }
+
+        return $months;
+    }
+
+    private function getYears(): array
+    {
+        $years = [];
+
+        for ($x = 0; $x < 3; $x++) {
+            $years[] = now()->subYears($x)->year;
+        }
+
+        return $years;
     }
 }
