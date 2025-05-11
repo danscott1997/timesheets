@@ -1,6 +1,5 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import {Link} from "@inertiajs/vue3";
 import { Head } from '@inertiajs/vue3';
 
 import { useForm } from '@inertiajs/vue3'

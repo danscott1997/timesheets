@@ -41,7 +41,7 @@ function chunkByWeek(data) {
                     <form method="GET" :action="route('timesheet.index')" class="flex gap-6">
                         <div class="flex flex-col">
                             <label for="staff">Staff</label>
-                            <select name="staff" class="bg-transparent w-44 my-2">
+                            <select name="staff" class="bg-transparent w-60 my-2">
                                 <template v-for="staffMember in staff">
                                     <option :value="staffMember.id" :selected="selectedStaff == staffMember.id" v-text="staffMember.full_name"></option>
                                 </template>
@@ -118,20 +118,20 @@ function chunkByWeek(data) {
                                         :class="item.custom_classes"
                                     >
                                         <a :href="route('time-entries.create', {staff: selectedStaff, date: item.date})">
-                                        <div class="flex flex-col">
-                                            <p>{{ item.day }}</p>
+                                            <div class="flex flex-col">
+                                                <p>{{ item.day }}</p>
 
-                                            <div class="text-xs mt-2">
-                                                <template v-if="item.disabled || item.weekend">
-                                                    <p>-</p>
-                                                </template>
-                                                <template v-else>
-                                                    <span v-text="item.clocked_in?.slice(0, 5)"></span>
-                                                    -
-                                                    <span v-text="item.clocked_out?.slice(0, 5)"></span>
-                                                </template>
+                                                <div class="text-xs mt-2">
+                                                    <template v-if="item.disabled || item.weekend">
+                                                        <p>-</p>
+                                                    </template>
+                                                    <template v-else>
+                                                        <span v-text="item.clocked_in?.slice(0, 5)"></span>
+                                                        -
+                                                        <span v-text="item.clocked_out?.slice(0, 5)"></span>
+                                                    </template>
+                                                </div>
                                             </div>
-                                        </div>
                                         </a>
                                     </td>
                                 </tr>

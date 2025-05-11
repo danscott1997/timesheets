@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 use App\Http\Controllers\TimesheetController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\TimeEntriesController;

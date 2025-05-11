@@ -58,7 +58,7 @@ class TimesheetController extends Controller
                 // If the first day of the month isn't a Monday, backfill the data so we generate a clean calendar
                 if ($day === 1) {
                     while ($this->date->dayOfWeek !== 1) {
-                        $this->date = (clone($this->date))->subDay();
+                        $this->date = $this->date->subDay();
                         $paddingDays[] = $this->createDayElement(['timesheet-day-disabled'], true);
                     }
 
@@ -71,6 +71,7 @@ class TimesheetController extends Controller
 
                 // Reset the date otherwise we might be looking at the wrong month
                 $this->date = Carbon::createFromDate($year, $month, $day);
+
                 $days[] = $this->createDayElement();
 
                 // If the last day of the month isn't a Sunday, fill the data so we generate a clean calendar

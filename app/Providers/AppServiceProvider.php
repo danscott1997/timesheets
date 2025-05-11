@@ -21,14 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-//        $staff = Staff::firstOrCreate([
-//            'first_name' => 'Dan',
-//            'last_name' => 'Scott',
-//            'email' => 'dan@test.com'
-//        ], ['email']);
-//
-//        dd($staff);
-
         Vite::prefetch(concurrency: 3);
     }
 }

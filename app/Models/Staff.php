@@ -18,6 +18,6 @@ class Staff extends Model
 
     public function getFullNameAttribute(): string
     {
-        return Str::limit(ucwords(sprintf("%s %s", $this->first_name, $this->last_name)), 20);
+        return Str::limit(ucwords(sprintf("%s %s", $this->first_name, $this->last_name)), 25);
     }
 }
