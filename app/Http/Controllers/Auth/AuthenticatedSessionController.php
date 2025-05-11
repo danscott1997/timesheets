@@ -34,7 +34,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('timesheet', absolute: false));
+        return redirect()->intended(route('timesheet.index', absolute: false));
     }
 
     /**
