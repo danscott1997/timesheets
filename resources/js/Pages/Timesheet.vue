@@ -9,7 +9,7 @@ defineProps({
     staff: Object,
     selectedStaff: String,
     selectedMonth: String,
-    selectedYear: String,
+    selectedYear: [String, Number],
 });
 
 function chunkByWeek(data) {
@@ -41,8 +41,8 @@ function chunkByWeek(data) {
 
                     <form method="GET" :action="route('timesheet.index')" class="flex gap-6">
                         <div class="flex flex-col">
-                            <label for="user">Staff</label>
-                            <select name="user" class="bg-transparent w-44 my-2">
+                            <label for="staff">Staff</label>
+                            <select name="staff" class="bg-transparent w-44 my-2">
                                 <template v-for="staffMember in staff">
                                     <option :value="staffMember.id" :selected="selectedStaff == staffMember.id" v-text="staffMember.full_name"></option>
                                 </template>
@@ -114,8 +114,14 @@ function chunkByWeek(data) {
                                             <p>{{ item.day }}</p>
 
                                             <div class="text-xs mt-2">
-                                                <p v-show="! item.disabled && ! item.weekend">08:00 - 16:00</p>
-                                                <p v-show="item.disabled || item.weekend">-</p>
+                                                <template v-if="item.disabled || item.weekend">
+                                                    <p>-</p>
+                                                </template>
+                                                <template v-else>
+                                                    <span v-text="item.clocked_in?.slice(0, 5)"></span>
+                                                    -
+                                                    <span v-text="item.clocked_out?.slice(0, 5)"></span>
+                                                </template>
                                             </div>
                                         </div>
                                         </a>

@@ -18,4 +18,9 @@ class TimeEntries extends Model
     {
         return $this->belongsTo(Staff::class);
     }
+
+    public function scopeForStaffOnDate($query, Staff $staff, string $date)
+    {
+        return $query->where('staff_id', $staff->id)->where('date', $date);
+    }
 }

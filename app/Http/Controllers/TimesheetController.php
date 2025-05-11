@@ -2,20 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\TimesheetRequest;
 use App\Models\Staff;
+use App\Models\TimeEntries;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Inertia\Inertia;
 
 class TimesheetController extends Controller
 {
     private Carbon $date;
+
+    private ?Staff $staff;
     
-    
-    public function index(Request $request)
+    public function index(TimesheetRequest $request)
     {
-        $month = request('month') ?? now()->monthName;
-        $year = request('year') ?? now()->year;
+        $data = $request->validated();
+
+        $staffId = Arr::get($data, 'staff');
+        $this->staff = $staffId ? Staff::find($staffId) : Staff::first();
+
+        $month = Arr::get($data, 'month') ?? now()->monthName;
+        $year = Arr::get($data, 'year') ?? now()->year;
 
         $date = Carbon::createFromFormat('F Y', "$month $year")->startOfMonth();
 
@@ -24,7 +32,7 @@ class TimesheetController extends Controller
             'years' => $this->getYears(),
             'months' => $this->getMonths(),
             'staff' => Staff::all()->toArray(),
-            'selectedStaff' => request('user'),
+            'selectedStaff' => request('user', $this->staff->id),
             'selectedMonth' => $month,
             'selectedYear' => $year,
         ]);
@@ -92,7 +100,11 @@ class TimesheetController extends Controller
             $classes[] = 'timesheet-day-disabled';
         }
 
-        // TODO - check existing time entry
+        if ($this->staff) {
+            $timeEntry = TimeEntries::forStaffOnDate($this->staff, $this->date->format('Y-m-d'))->first();
+        } else {
+            $timeEntry = null;
+        }
 
         return [
             'custom_classes' => implode(' ', $classes),
@@ -100,6 +112,8 @@ class TimesheetController extends Controller
             'date' => $this->date->format('Y-m-d'),
             'disabled' => $disabled,
             'weekend' => $this->date->isWeekend(),
+            'clocked_in' => $timeEntry?->clocked_in,
+            'clocked_out' => $timeEntry?->clocked_out,
         ];
     }
 

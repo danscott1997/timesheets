@@ -30,12 +30,13 @@ class TimeEntriesController extends Controller
             'staff' => 'numeric|required|exists:staff,id',
         ]);
 
-        // TODO - check for existing time entry
+        $staffMember = Staff::find($data['staff']);
 
         return Inertia::render('CreateTimeEntry', [
-            'staff' => Staff::find($data['staff']),
+            'staff' => $staffMember,
             'date' => $data['date'],
             'formattedDate' => Carbon::parse($data['date'])->format('M jS Y'),
+            'timeEntry' => TimeEntries::forStaffOnDate($staffMember, $data['date'])->first(),
         ]);
     }
 
@@ -45,10 +46,6 @@ class TimeEntriesController extends Controller
     public function store(CreateTimeEntryRequest $request)
     {
         $data = $request->validated();
-
-        $existing = TimeEntries::where('date', $data['selectedDate'])
-            ->where('staff_id', $data['staff_id'])
-            ->first();
 
         try {
             TimeEntries::updateOrCreate([

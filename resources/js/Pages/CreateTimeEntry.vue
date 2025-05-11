@@ -9,11 +9,12 @@ const props = defineProps({
     staff: Object,
     date: String,
     formattedDate: String,
+    timeEntry: Object,
 });
 
 const form = useForm({
-    clocked_in: null,
-    clocked_out: null,
+    clocked_in: props.timeEntry?.clocked_in,
+    clocked_out: props.timeEntry?.clocked_out,
     staff_id: props.staff?.id,
     selectedDate: props.date,
 });
@@ -49,7 +50,10 @@ function submitForm() {
 
 
                         <form @submit.prevent="submitForm()" class="max-w-xl mx-auto">
-                            <h2 class="font-bold mb-5 text-lg">Creating time entry for {{ staff.full_name }} on {{ formattedDate }}</h2>
+                            <h2 class="font-bold mb-5 text-lg">
+                                <span v-text="(timeEntry ? 'Updating' : 'Creating')"></span>
+                                time entry for {{ staff.full_name }} on {{ formattedDate }}
+                            </h2>
 
                             <div class="mb-5">
                                 <label for="clocked_in_at" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Clocked In*</label>
