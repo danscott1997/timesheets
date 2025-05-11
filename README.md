@@ -1,61 +1,43 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Timesheet Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project provides functionality for managing timesheets, with the ability to submit clockin and clockout times and manage staff members. Built with Laravel and InertiaJS, this is a rework leveraging modern frameworks of a project I intially developed in vanilla PHP and jQuery in a previous role.
 
-## About Laravel
+Currently the functionality is limited however I will be adding to this over time (see [here](#future-development) for proposed future changes). 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+See below a breakdown of the existing functionality.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Manage and view timesheets
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+You can manage and view timesheets for a list of staff, and filter by month and year. The timesheet currently renders a single calendar month, and to ensure the calendar is a clean square grid it backfills any days not in the current month. The current day is highlighted in red, and weekends are greyed out.
 
-## Learning Laravel
+Clicking on a specific date takes you to a new page to submit time entries for clockin and clockout times.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+In future this functionality would be expanded further, with the option to upload data via a CSV and also disable bank holiday dates. The time entry submission could also be streamlined by handling it via a modal rather than navigating to a new page.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+![image](https://github.com/user-attachments/assets/4b49467e-06e2-4439-b927-da1ae91c3943)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Add new staff members
 
-## Laravel Sponsors
+New staff members can be added via the Add Staff member page, this is a basic form using InertiaJS and Laravel for the server-side validation. In future this would be developed further into a CRUD interface with functionality to view all staff members, amend details and delete/archive staff.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+![image](https://github.com/user-attachments/assets/675f328d-52be-4d35-a7eb-2e28ade4f3f5)
 
-### Premium Partners
+### Add new time entries
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
+New time entries are submitted via the timesheet itself, which brings you to this page. Again this is a basic form using InertiaJS and Laravel. In future this would be removed entirely and reworked as a modal on the timesheet page.
 
-## Contributing
+![image](https://github.com/user-attachments/assets/10b6932c-e728-4bf6-952f-908367dcae3d)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Future Development
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- [ ] Implement upload CSV functionality
+- [ ] Convert manual time entry submit to modal
+- [ ] Implement update, delete and manage (view all) staff functionality
+- [ ] Add tagging to timesheet (usecase would be for explaining if a staff member leaves early)
+- [ ] Add reports and/or charts per staff member
+- [ ] Add shift patterns/working hours and validation on the timesheet
+- [ ] Add data export (usecase would be for payroll data)
+- [ ] Build REST API (usecase would be Slack integration)
+- [ ] Add functionality for absence reporting
+- [ ] Add staff member login and permissions
+- [ ] Add functionality for staff members to clockin/clockout themselves
