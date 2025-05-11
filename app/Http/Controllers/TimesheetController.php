@@ -38,7 +38,7 @@ class TimesheetController extends Controller
         ]);
     }
 
-    private function loadTimesheet($year = null, $month = null): array
+    private function loadTimesheet(?int $year = null, ?int $month = null): array
     {
         $year = $year ?? now()->year;
         $startMonth = $month ?? 1;

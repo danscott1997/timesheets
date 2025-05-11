@@ -10,6 +10,7 @@ const props = defineProps({
     date: String,
     formattedDate: String,
     timeEntry: Object,
+    timesheetLink: String,
 });
 
 const form = useForm({
@@ -47,6 +48,10 @@ function submitForm() {
                                 <span class="font-bold text-red-500" v-text="error"></span>
                             </template>
                         </div>
+
+                        <a :href="timesheetLink" class="back-button">
+                            Back to timesheet
+                        </a>
 
 
                         <form @submit.prevent="submitForm()" class="max-w-xl mx-auto">

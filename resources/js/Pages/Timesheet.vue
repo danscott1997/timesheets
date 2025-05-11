@@ -38,7 +38,6 @@ function chunkByWeek(data) {
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8 text-gray-200">
                 <div class="flex gap-8 mb-4">
-
                     <form method="GET" :action="route('timesheet.index')" class="flex gap-6">
                         <div class="flex flex-col">
                             <label for="staff">Staff</label>
@@ -51,7 +50,7 @@ function chunkByWeek(data) {
 
                         <div class="flex flex-col">
                             <label for="month">Month</label>
-                            <select name="month" class="bg-transparent w-24 my-2">
+                            <select name="month" class="bg-transparent w-28 my-2">
                                 <template v-for="month in months">
                                     <option :value="month" :selected="selectedMonth == month" v-text="month"></option>
                                 </template>
@@ -75,12 +74,21 @@ function chunkByWeek(data) {
                         </div>
                     </form>
 
-                    <div class="flex flex-col ml-auto">
-                        <label for="file_input">Upload CSV</label>
-                        <input disabled id="file_input"
-                               type="file"
-                               class="block w-full my-2 text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                    <div class="flex flex-col justify-end ml-auto">
+                        <a :href="route('timesheet.index')">
+                            <button
+                                    class="text-white w-32 bg-gray-800 hover:bg-gray-900 font-medium rounded-lg px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+                                Reset
+                            </button>
+                        </a>
                     </div>
+
+<!--                    <div class="flex flex-col ml-auto">-->
+<!--                        <label for="file_input">Upload CSV</label>-->
+<!--                        <input disabled id="file_input"-->
+<!--                               type="file"-->
+<!--                               class="block w-full my-2 text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">-->
+<!--                    </div>-->
                 </div>
 
 

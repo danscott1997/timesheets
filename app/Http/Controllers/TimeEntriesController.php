@@ -32,11 +32,20 @@ class TimeEntriesController extends Controller
 
         $staffMember = Staff::find($data['staff']);
 
+        $carbonDate = Carbon::parse($data['date']);
+
+        $timesheetLink = route('timesheet.index', [
+            'staff' => $staffMember->id,
+            'month' => $carbonDate->monthName,
+            'year' => $carbonDate->year,
+        ]);
+
         return Inertia::render('CreateTimeEntry', [
             'staff' => $staffMember,
             'date' => $data['date'],
-            'formattedDate' => Carbon::parse($data['date'])->format('M jS Y'),
+            'formattedDate' => $carbonDate->format('M jS Y'),
             'timeEntry' => TimeEntries::forStaffOnDate($staffMember, $data['date'])->first(),
+            'timesheetLink' => $timesheetLink,
         ]);
     }
 
