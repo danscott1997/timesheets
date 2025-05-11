@@ -46,36 +46,35 @@ class TimesheetController extends Controller
 
         $timesheet = [];
 
-        for ($i = $startMonth; $i <= $endMonth; $i++) {
-            $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $i, $year);
+        for ($month = $startMonth; $month <= $endMonth; $month++) {
+            $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
             $days = [];
             $paddingDays = [];
 
-            $days[] = ''; // Set first key (0) as blank, we unset this later to force the array to start at 1
-
             // Iterate over each day in the current month
-            for ($x = 1; $x <= $daysInMonth; $x++) {
-                $this->date = Carbon::createFromDate($year, $i, $x);
-
-                $monthName = $this->date->monthName;
+            for ($day = 1; $day <= $daysInMonth; $day++) {
+                $this->date = Carbon::createFromDate($year, $month, $day);
 
                 // If the first day of the month isn't a Monday, backfill the data so we generate a clean calendar
-                if ($x === 1) {
+                if ($day === 1) {
                     while ($this->date->dayOfWeek !== 1) {
-                        $this->date = $this->date->subDay();
+                        $this->date = (clone($this->date))->subDay();
                         $paddingDays[] = $this->createDayElement(['timesheet-day-disabled'], true);
                     }
+
                     foreach (array_reverse($paddingDays) as $paddingDay) {
                         $days[] = $paddingDay;
                     }
+
+                    unset($paddingDays);
                 }
 
                 // Reset the date otherwise we might be looking at the wrong month
-                $this->date = Carbon::createFromDate($year, $i, $x);
+                $this->date = Carbon::createFromDate($year, $month, $day);
                 $days[] = $this->createDayElement();
 
                 // If the last day of the month isn't a Sunday, fill the data so we generate a clean calendar
-                if ($x === $daysInMonth) {
+                if ($day === $daysInMonth) {
                     while ($this->date->dayOfWeek !== 0) {
                         $this->date = $this->date->addDays(1);
                         $days[] = $this->createDayElement(['timesheet-day-disabled'], true);
@@ -83,8 +82,7 @@ class TimesheetController extends Controller
                 }
             }
 
-            unset($days[0]); // Force array keys to start at 1
-            $timesheet[$monthName] = $days;
+            $timesheet[Carbon::create()->month($month)->monthName] = $days;
         }
 
         return $timesheet;
